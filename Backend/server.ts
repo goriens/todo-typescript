@@ -1,9 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import todoRouter from "./routes/todos";
+import cors from "cors";
 import "./config/db"; //mongodb
 
 const app = express();
+app.use(cors());
 const PORT = 8080;
 
 // Parse incoming JSON requests
