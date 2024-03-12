@@ -3,7 +3,7 @@ import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { useEffect, useState } from "react";
 
-const API_URL = "";
+const API_URL = "http://localhost:8080/api";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ function App() {
   const handleDeleteTodo = async (id) => {
     try {
       setLoading(true);
-      await axios.delete(`http://localhost:8080/api/${id}`);
+      await axios.delete(`${API_URL}/${id}`);
       setLoading(false);
       setData(data.filter((todo) => todo._id !== id));
     } catch (error) {
@@ -27,7 +27,7 @@ function App() {
   const handlePostRequest = async () => {
     try {
       setLoading(true);
-      const response = await axios.post("http://localhost:8080/api", formData, {
+      const response = await axios.post(`${API_URL}`, formData, {
         headers: { "Content-Type": "application/json" },
       });
       setLoading(false);
@@ -39,7 +39,7 @@ function App() {
   const completePostRequest = async (id, completed) => {
     try {
       setLoading(true);
-      const response = await axios.patch(`http://localhost:8080/api/${id}`, {
+      const response = await axios.patch(`${API_URL}/${id}`, {
         completed: !completed,
       });
       getData();
@@ -57,7 +57,7 @@ function App() {
   const getData = async () => {
     try {
       setLoading(true);
-      await axios.get("http://localhost:8080/api").then((res) => {
+      await axios.get(`${API_URL}`).then((res) => {
         setData(res.data);
         setLoading(false);
       });
