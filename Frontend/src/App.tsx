@@ -4,16 +4,28 @@ import { Navbar } from "./components/Navbar";
 import { useEffect, useState } from "react";
 
 const API_URL = "https://type-todo-dep.onrender.com/api";
+interface TodoItem {
+  _id: string;
+  title: string;
+  task: string;
+  completed: boolean;
+}
+interface FormChangeEvent {
+  target: {
+    name: string;
+    value: string;
+  };
+}
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<TodoItem[]>([]);
   const [formData, setFormData] = useState({
     title: "",
     task: "",
   });
 
-  const handleDeleteTodo = async (id) => {
+  const handleDeleteTodo = async (id: string) => {
     try {
       setLoading(true);
       await axios.delete(`${API_URL}/${id}`);
@@ -36,7 +48,7 @@ function App() {
       console.error("Error posting data:", error);
     }
   };
-  const completePostRequest = async (id, completed) => {
+  const completePostRequest = async (id: string, completed: boolean) => {
     try {
       setLoading(true);
       const response = await axios.patch(`${API_URL}/${id}`, {
@@ -50,7 +62,7 @@ function App() {
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: FormChangeEvent) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
@@ -115,7 +127,7 @@ function App() {
               >
                 {i + 1}. {e.title}
               </h2>
-              <p className={e.completed && "opacity-40 line-through"}>
+              <p className={e.completed ? "opacity-40 line-through" : ""}>
                 {e.task}
               </p>
               <p
