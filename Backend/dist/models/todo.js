@@ -8,6 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const todoSchema = new mongoose_1.default.Schema({
     title: { type: String, required: true },
     task: { type: String, required: true },
+    completed: { type: Boolean, default: false },
 });
 const Todo = mongoose_1.default.model("Todo", todoSchema);
 exports.Todo = Todo;

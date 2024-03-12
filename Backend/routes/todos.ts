@@ -23,19 +23,16 @@ router.post("/", async (req, res) => {
 });
 
 router.patch("/:id", async (req, res) => {
-  const newUpdate = {
-    title: req.body.title,
-    task: req.body.task,
-  };
   try {
-    const updatedTodo = await Todo.findOneAndUpdate(req.body.id, newUpdate, {
-      new: true,
-    });
+    const updatedTodo = await Todo.findOneAndUpdate(
+      { _id: req.params.id },
+      { completed: req.body.completed },
+      { new: true }
+    );
 
     if (!updatedTodo) {
       return res.status(404).send({ message: "Todo not found" });
     }
-
     res.send({ message: "Todo updated successfully", data: updatedTodo });
   } catch (err) {
     res.status(500).send({ message: "Error updating Todo", err });

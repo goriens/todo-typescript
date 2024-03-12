@@ -3,6 +3,8 @@ import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { useEffect, useState } from "react";
 
+const API_URL = "";
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -34,6 +36,20 @@ function App() {
       console.error("Error posting data:", error);
     }
   };
+  const completePostRequest = async (id, completed) => {
+    try {
+      setLoading(true);
+      const response = await axios.patch(`http://localhost:8080/api/${id}`, {
+        completed: !completed,
+      });
+      getData();
+      setLoading(false);
+      console.log("Data posted successfully:", response.data);
+    } catch (error) {
+      console.error("Error posting data:", error);
+    }
+  };
+
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
@@ -92,10 +108,16 @@ function App() {
         <div className=" h-96 overflow-auto">
           {data.map((e, i) => (
             <div className="mt-4 border py-2 px-4  relative" key={e._id}>
-              <h2 className="font-medium">
+              <h2
+                className={
+                  e.completed ? "opacity-40 line-through" : "font-medium"
+                }
+              >
                 {i + 1}. {e.title}
               </h2>
-              <p>{e.task}</p>
+              <p className={e.completed && "opacity-40 line-through"}>
+                {e.task}
+              </p>
               <p
                 className="absolute top-4 right-0  cursor-pointer h-7 w-7 flex justify-center items-center"
                 onClick={() => handleDeleteTodo(e._id)}
@@ -105,6 +127,24 @@ function App() {
                   alt=""
                   className="w-5 h-5"
                 />
+              </p>
+              <p
+                className="absolute top-4 right-7  cursor-pointer h-7 w-7 flex justify-center items-center"
+                onClick={() => completePostRequest(e._id, e.completed)}
+              >
+                {e.completed ? (
+                  <img
+                    src="https://cdn4.iconfinder.com/data/icons/generic-interaction/143/yes-tick-success-done-complete-check-allow-512.png"
+                    alt=""
+                    className="w-5 h-5"
+                  />
+                ) : (
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Small-dark-green-circle.svg/768px-Small-dark-green-circle.svg.png"
+                    alt=""
+                    className="w-5 h-5"
+                  />
+                )}
               </p>
             </div>
           ))}

@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const mongoURI = "mongodb://127.0.0.1:27017/w3todo";
+const mongoURI = "mongodb+srv://FastEasyShare:gaada123@cluster0.ukhca.mongodb.net/bigecom?retryWrites=true&w=majority";
 mongoose_1.default
     .connect(mongoURI)
     .then(() => console.log("Connected to MongoDB"))

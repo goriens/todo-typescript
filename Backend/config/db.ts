@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-const mongoURI = "mongodb://127.0.0.1:27017/w3todo";
+const mongoURI =
+  "mongodb+srv://FastEasyShare:gaada123@cluster0.ukhca.mongodb.net/bigecom?retryWrites=true&w=majority";
 
 mongoose
   .connect(mongoURI)

@@ -35,14 +35,8 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 router.patch("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUpdate = {
-        title: req.body.title,
-        task: req.body.task,
-    };
     try {
-        const updatedTodo = yield todo_1.Todo.findOneAndUpdate(req.body.id, newUpdate, {
-            new: true,
-        });
+        const updatedTodo = yield todo_1.Todo.findOneAndUpdate({ _id: req.params.id }, { completed: req.body.completed }, { new: true });
         if (!updatedTodo) {
             return res.status(404).send({ message: "Todo not found" });
         }
