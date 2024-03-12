@@ -3,7 +3,7 @@ import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { useEffect, useState } from "react";
 
-const API_URL = "http://localhost:8080/api";
+const API_URL = "https://type-todo-dep.onrender.com/api";
 
 function App() {
   const [loading, setLoading] = useState(true);
